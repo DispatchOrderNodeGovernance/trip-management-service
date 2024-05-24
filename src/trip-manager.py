@@ -44,7 +44,7 @@ def lambda_handler(event, context):
         data = urllib.parse.urlencode(payload).encode()
         
         # Create the request object
-        req = urllib.request.Request(dispatch_endpoint, data=data, method='POST')
+        req = urllib.request.Request(dispatch_endpoint, data=data, method='POST', headers={'Content-Type': 'application/json'})
         
         try:
             with urllib.request.urlopen(req, timeout=2) as response:
