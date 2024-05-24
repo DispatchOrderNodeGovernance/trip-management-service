@@ -48,14 +48,25 @@ def lambda_handler(event, context):
         
         try:
             with urllib.request.urlopen(req, timeout=2) as response:
-                pass
+                return {
+                    'statusCode': 200,
+                    'body': response.read().decode('utf-8')
+                }
         except socket.timeout:
             pass # Ignore timeout exceptions
         except Exception as e:
-            pass # Ignore any other exceptions
+            return {
+                'statusCode': 200,
+                'body': json.dumps({
+                    'error': e.__class__.__name__,
+                })
+            }
+#            pass # Ignore any other exceptions
         
         # Return response with 200 status code and empty body
         return {
             'statusCode': 200,
-            'body': json.dumps({})
+            'body': json.dumps({
+                'status': 'unknown'
+            })
         }
