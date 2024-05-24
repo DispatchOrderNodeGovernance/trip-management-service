@@ -54,6 +54,11 @@ def lambda_handler(event, context):
                 }
         except socket.timeout:
             pass # Ignore timeout exceptions
+        except urllib.error.HTTPError as e:
+            return {
+                'statusCode': e.code,
+                'body': e.read().decode('utf-8')
+            }
         except Exception as e:
             return {
                 'statusCode': 200,
@@ -70,3 +75,4 @@ def lambda_handler(event, context):
                 'status': 'unknown'
             })
         }
+    
